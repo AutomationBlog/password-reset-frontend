@@ -1,8 +1,9 @@
-# React + Vite
+# Password Reset Frontend UI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+User management UI
 
-Currently, two official plugins are available:
+## End Point
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+[Frontend URL](https://password-reset-blog.netlify.app/)
+
+[Backend URL](https://password-reset-backend-n39j.onrender.com/)
