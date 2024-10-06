@@ -1,4 +1,6 @@
+import { Spinner } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import SpinnerComponent from "../components/Spinner";
 
 const LoginPage = () => {
   return (
@@ -74,7 +76,7 @@ const LoginPage = () => {
                 Forgot password?
               </a>
             </div>
-
+            <SpinnerComponent />
             <div>
               <button
                 type="submit"

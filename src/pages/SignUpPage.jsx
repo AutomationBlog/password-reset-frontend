@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import PasswordStrengthMeter from "../components/PasswordStrengthMeter";
+import SpinnerComponent from "../components/Spinner";
 
 const SignUpPage = () => {
   const [name, setName] = useState("");
@@ -106,7 +107,7 @@ const SignUpPage = () => {
 
               <PasswordStrengthMeter password={password} />
             </div>
-
+            <SpinnerComponent />
             <div>
               <button
                 type="submit"
