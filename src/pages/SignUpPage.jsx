@@ -2,11 +2,13 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import PasswordStrengthMeter from "../components/PasswordStrengthMeter";
 import SpinnerComponent from "../components/Spinner";
+import { useAuthStore } from "../store/authStore";
 
 const SignUpPage = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { signup, isLoading, error } = useAuthStore();
   const handleSignUp = (e) => {
     e.preventDefault();
   };

@@ -1,8 +1,14 @@
-import { Spinner } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import SpinnerComponent from "../components/Spinner";
+import { useState } from "react";
 
 const LoginPage = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const handleLogin = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <>
       {/*
@@ -28,7 +34,12 @@ const LoginPage = () => {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form action="#" method="POST" className="space-y-6">
+          <form
+            action="#"
+            method="POST"
+            className="space-y-6"
+            onSubmit={handleLogin}
+          >
             <div>
               <label
                 htmlFor="email"
