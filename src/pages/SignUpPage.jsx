@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import PasswordStrengthMeter from "../components/PasswordStrengthMeter";
 import SpinnerComponent from "../components/Spinner";
 import { useAuthStore } from "../store/authStore";
@@ -9,8 +9,15 @@ const SignUpPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { signup, isLoading, error } = useAuthStore();
-  const handleSignUp = (e) => {
+  const navigate = useNavigate();
+  const handleSignUp = async (e) => {
     e.preventDefault();
+    try {
+      await signup(name, email, password);
+      navigate("/verify-email");
+    } catch (e) {
+      console.log(e);
+    }
   };
   return (
     <>
@@ -106,16 +113,21 @@ const SignUpPage = () => {
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
-
+              {error && (
+                <p className="text-red-500 text-center font-semibold mt-2">
+                  {error}
+                </p>
+              )}
               <PasswordStrengthMeter password={password} />
             </div>
-            <SpinnerComponent />
+            {/* <SpinnerComponent /> */}
             <div>
               <button
+                {...{ disabled: isLoading }}
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Sign Up
+                {isLoading ? <SpinnerComponent /> : "Sign Up"}
               </button>
             </div>
           </form>

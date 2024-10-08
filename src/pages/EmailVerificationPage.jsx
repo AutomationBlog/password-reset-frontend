@@ -1,10 +1,16 @@
 import { useEffect, useRef, useState } from "react";
+import { useAuthStore } from "../store/authStore";
+import SpinnerComponent from "../components/Spinner";
+import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const EmailVerificationPage = () => {
+  const { user } = useAuthStore();
   const [code, setCode] = useState(["", "", "", "", "", ""]);
   const inputRefs = useRef([]);
+  const navigate = useNavigate();
 
-  const isLoading = false;
+  const { verifyEmail, isLoading, error } = useAuthStore();
 
   const handleChange = (index, value) => {
     const newCode = [...code];
@@ -39,7 +45,13 @@ const EmailVerificationPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const VerificationCode = code.join("");
-    alert("Verification Code Submitted: " + VerificationCode);
+    try {
+      await verifyEmail(VerificationCode);
+      navigate("/");
+      toast.success("Email Verified Successfully");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -54,11 +66,18 @@ const EmailVerificationPage = () => {
         <div className="relative bg-white px-6 pt-10 pb-9 shadow-xl mx-auto w-full max-w-lg rounded-2xl">
           <div className="mx-auto flex w-full max-w-md flex-col space-y-16">
             <div className="flex flex-col items-center justify-center text-center space-y-2">
+              <Link to="/">
+                <img
+                  alt="Your Company"
+                  src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
+                  className="mx-auto h-10 w-auto"
+                />
+              </Link>
               <div className="font-semibold text-3xl">
                 <p>Email Verification</p>
               </div>
               <div className="flex flex-row text-sm font-medium text-gray-400">
-                <p>We have sent a code to your email ba**@dipainhouse.com</p>
+                <p>We have sent a code to your email {user?.email}</p>
               </div>
             </div>
 
@@ -85,14 +104,18 @@ const EmailVerificationPage = () => {
                       </div>
                     ))}
                   </div>
-
+                  {error && (
+                    <p className="text-red-500 font-semibold text-center mt-2">
+                      {error}
+                    </p>
+                  )}
                   <div className="flex flex-col space-y-5">
                     <div>
                       <button
                         className="flex flex-row items-center justify-center text-center w-full border rounded-xl outline-none py-5 bg-blue-700 border-none text-white text-md shadow-sm"
                         disabled={isLoading || code.some((digit) => !digit)}
                       >
-                        Verify Email
+                        {isLoading ? <SpinnerComponent /> : "Verify Email"}
                       </button>
                     </div>
 
