@@ -7,6 +7,7 @@ import { Toaster } from "react-hot-toast";
 import { useEffect } from "react";
 import { useAuthStore } from "./store/authStore";
 import DashboardPage from "./pages/DashboardPage";
+import SpinnerComponent from "./components/Spinner";
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, user } = useAuthStore();
@@ -28,14 +29,26 @@ const RedirectAuthenticatedUser = ({ children }) => {
 };
 
 function App() {
-  const { checkAuth } = useAuthStore();
+  const { isCheckingAuth, checkAuth } = useAuthStore();
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
+
+  {
+    isCheckingAuth ? <SpinnerComponent /> : null;
+  }
+
   return (
     <div>
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route
+          path="/"
+          element={
+            <RedirectAuthenticatedUser>
+              <HomePage />
+            </RedirectAuthenticatedUser>
+          }
+        />
         <Route
           path="/dashboard"
           element={

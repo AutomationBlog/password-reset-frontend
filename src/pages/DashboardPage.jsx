@@ -8,13 +8,9 @@ import {
   MenuItems,
 } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { useAuthStore } from "../store/authStore";
+import { User } from "lucide-react";
 
-const user = {
-  name: "Tom Cook",
-  email: "tom@example.com",
-  imageUrl:
-    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-};
 const navigation = [
   { name: "Dashboard", href: "#", current: true },
   { name: "Team", href: "#", current: false },
@@ -23,9 +19,9 @@ const navigation = [
   { name: "Reports", href: "#", current: false },
 ];
 const userNavigation = [
-  { name: "Your Profile", href: "#" },
-  { name: "Settings", href: "#" },
-  { name: "Sign out", href: "#" },
+  { name: "Your Profile", href: "#", onClick: "" },
+  { name: "Settings", href: "#", onClick: "" },
+  //   { name: "Sign out", href: "/", onClick: "handleLogout" },
 ];
 
 function classNames(...classes) {
@@ -33,6 +29,11 @@ function classNames(...classes) {
 }
 
 export default function DashboardPage() {
+  const { user, logout } = useAuthStore();
+
+  const handleLogout = () => {
+    logout();
+  };
   return (
     <>
       {/*
@@ -92,11 +93,10 @@ export default function DashboardPage() {
                       <MenuButton className="relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                         <span className="absolute -inset-1.5" />
                         <span className="sr-only">Open user menu</span>
-                        <img
-                          alt=""
-                          src={user.imageUrl}
-                          className="h-8 w-8 rounded-full"
-                        />
+                        <User />
+                        <span className="text-white font-semibold font-sans ml-2">
+                          {user?.name}
+                        </span>
                       </MenuButton>
                     </div>
                     <MenuItems
@@ -113,6 +113,15 @@ export default function DashboardPage() {
                           </a>
                         </MenuItem>
                       ))}
+                      <MenuItem>
+                        <a
+                          href={"/"}
+                          onClick={handleLogout}
+                          className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                        >
+                          Sign out
+                        </a>
+                      </MenuItem>
                     </MenuItems>
                   </Menu>
                 </div>
