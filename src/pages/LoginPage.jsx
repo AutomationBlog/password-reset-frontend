@@ -88,12 +88,14 @@ const LoginPage = () => {
               </div>
             </div>
             <div className="text-sm flex justify-end">
-              <a
-                href="#"
-                className="font-semibold text-indigo-600 hover:text-indigo-500"
-              >
-                Forgot password?
-              </a>
+              <Link to="/forgot-password">
+                <a
+                  href="#"
+                  className="font-semibold text-indigo-600 hover:text-indigo-500"
+                >
+                  Forgot password?
+                </a>
+              </Link>
             </div>
             {error && (
               <p className="text-red-500 text-center font-semibold mt-2">

@@ -1,7 +1,12 @@
 import { create } from "zustand";
 import axios from "axios";
 
-axios.defaults.baseURL = "http://localhost:3000";
+// axios.defaults.baseURL = "http://localhost:3000";
+if (import.meta.env.VITE_isLOCAL === "true") {
+  axios.defaults.baseURL = import.meta.env.VITE_BACKEND_URL_LOCAL;
+} else {
+  axios.defaults.baseURL = import.meta.env.VITE_BACKEND_URL;
+}
 axios.defaults.withCredentials = true;
 
 export const useAuthStore = create((set) => ({
@@ -11,6 +16,7 @@ export const useAuthStore = create((set) => ({
   error: null,
   isLoading: false,
   isCheckingAuth: true,
+  message: null,
   signup: async (name, email, password) => {
     set({ isLoading: true, error: null });
     try {
@@ -113,6 +119,40 @@ export const useAuthStore = create((set) => ({
         isCheckingAuth: false,
         isAuthenticated: false,
       });
+    }
+  },
+  forgotPassword: async (email) => {
+    set({ isLoading: true, error: null, message: null });
+    try {
+      const response = await axios.post("/api/auth/forgot-password", {
+        email,
+      });
+      if (JSON.parse(response.data.success)) {
+        set({ isLoading: false, error: null, message: response.data.msg });
+      }
+    } catch (error) {
+      set({
+        isLoading: false,
+        error: error.response.data.msg || "Error sending password reset link",
+      });
+      throw error;
+    }
+  },
+  resetPassword: async (password, token) => {
+    set({ isLoading: true, error: null });
+    try {
+      const response = await axios.post("/api/auth/reset-password/" + token, {
+        password,
+      });
+      if (JSON.parse(response.data.success)) {
+        set({ isLoading: false, error: null });
+      }
+    } catch (error) {
+      set({
+        isLoading: false,
+        message: error.response.data.msg || "Error resetting password",
+      });
+      throw error;
     }
   },
 }));
