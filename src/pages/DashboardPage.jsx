@@ -103,9 +103,11 @@ export default function DashboardPage() {
                         <span className="absolute -inset-1.5" />
                         <span className="sr-only">Open user menu</span>
                         <User />
-                        <span className="text-white font-semibold font-sans ml-2">
-                          {user?.name}
-                        </span>
+                        <div className="ml-3">
+                          <div className="text-base font-medium leading-none text-white">
+                            {user.name}
+                          </div>
+                        </div>
                       </MenuButton>
                     </div>
                     <MenuItems
@@ -209,6 +211,15 @@ export default function DashboardPage() {
                     {item.name}
                   </DisclosureButton>
                 ))}
+              </div>
+              <div className="mt-3 space-y-1 px-2">
+                <a
+                  href={"/"}
+                  onClick={handleLogout}
+                  className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
+                >
+                  Log out
+                </a>
               </div>
             </div>
           </DisclosurePanel>
