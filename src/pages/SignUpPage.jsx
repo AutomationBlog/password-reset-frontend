@@ -14,20 +14,20 @@ const SignUpPage = () => {
   const handleSignUp = async (e) => {
     e.preventDefault();
     try {
-      await signup(name, email, password);
-      // const token = await signup(name, email, password);
-      // setCookies(token);
+      // await signup(name, email, password);
+      const token = await signup(name, email, password);
+      setCookies(token);
       navigate("/verify-email");
     } catch (e) {
       console.log(e);
     }
   };
 
-  // const setCookies = (token) => {
-  //   Cookies.set("token", token, {
-  //     expires: 7,
-  //   });
-  // };
+  const setCookies = (token) => {
+    Cookies.set("token", token, {
+      expires: 7,
+    });
+  };
   return (
     <>
       {/*

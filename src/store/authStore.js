@@ -108,6 +108,10 @@ export const useAuthStore = create((set) => ({
   checkAuth: async () => {
     set({ isCheckingAuth: true, error: null });
     try {
+      const token = Cookies.get("token");
+      if (token) {
+        axios.defaults.headers.common["Authorization"] = `Bearer-${token}`;
+      }
       const response = await axios.get("/api/auth/check-auth");
       if (JSON.parse(response.data.success)) {
         set({

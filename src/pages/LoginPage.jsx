@@ -11,17 +11,17 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const handleLogin = async (e) => {
     e.preventDefault();
-    await login(email, password);
-    // const token = await login(email, password);
-    // setCookies(token);
+    // await login(email, password);
+    const token = await login(email, password);
+    setCookies(token);
     navigate("/dashboard");
   };
 
-  // const setCookies = (token) => {
-  //   Cookies.set("token", token, {
-  //     expires: 7,
-  //   });
-  // };
+  const setCookies = (token) => {
+    Cookies.set("token", token, {
+      expires: 7,
+    });
+  };
 
   return (
     <>
