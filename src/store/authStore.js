@@ -38,6 +38,7 @@ export const useAuthStore = create((set) => ({
         email,
         password,
       });
+      console.log(response.data);
       if (JSON.parse(response.data.success)) {
         set({
           user: response.data.user,
