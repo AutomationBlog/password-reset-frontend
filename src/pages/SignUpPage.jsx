@@ -8,12 +8,13 @@ const SignUpPage = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { signup, isLoading, error } = useAuthStore();
+  const { signup, isLoading, error, setCookies, token } = useAuthStore();
   const navigate = useNavigate();
   const handleSignUp = async (e) => {
     e.preventDefault();
     try {
       await signup(name, email, password);
+      setCookies(token);
       navigate("/verify-email");
     } catch (e) {
       console.log(e);

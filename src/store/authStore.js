@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import Cookies from "js-cookie";
 import axios from "axios";
 
 // axios.defaults.baseURL = "http://localhost:3000";
@@ -17,6 +18,18 @@ export const useAuthStore = create((set) => ({
   isLoading: false,
   isCheckingAuth: true,
   message: null,
+  token: null,
+  setCookie: (token) => {
+    Cookies.set("token", token, {
+      expires: 7,
+    });
+  },
+  getCookies: () => {
+    return Cookies.get("token");
+  },
+  clearCookies: () => {
+    Cookies.remove("token");
+  },
   signup: async (name, email, password) => {
     set({ isLoading: true, error: null });
     try {
@@ -28,6 +41,7 @@ export const useAuthStore = create((set) => ({
       if (JSON.parse(response.data.success)) {
         set({
           user: response.data.user,
+          token: response.data.token,
           isAuthenticated: true,
           isLoading: false,
         });
@@ -49,6 +63,7 @@ export const useAuthStore = create((set) => ({
       });
       if (JSON.parse(response.data.success)) {
         set({
+          token: response.data.token,
           isAuthenticated: true,
           user: response.data.user,
           error: null,

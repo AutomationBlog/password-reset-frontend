@@ -29,10 +29,11 @@ function classNames(...classes) {
 }
 
 export default function DashboardPage() {
-  const { user, logout } = useAuthStore();
+  const { user, logout, clearCookies } = useAuthStore();
 
   const handleLogout = () => {
     logout();
+    clearCookies();
   };
   return (
     <>
