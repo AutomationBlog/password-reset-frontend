@@ -19,7 +19,7 @@ export const useAuthStore = create((set) => ({
   isCheckingAuth: true,
   message: null,
   token: null,
-  setCookie: (token) => {
+  setCookies: (token) => {
     Cookies.set("token", token, {
       expires: 7,
     });

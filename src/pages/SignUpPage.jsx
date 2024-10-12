@@ -14,8 +14,8 @@ const SignUpPage = () => {
     e.preventDefault();
     try {
       await signup(name, email, password);
-      setCookies(token);
       navigate("/verify-email");
+      setCookies(token);
     } catch (e) {
       console.log(e);
     }
