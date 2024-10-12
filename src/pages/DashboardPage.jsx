@@ -11,6 +11,7 @@ import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useAuthStore } from "../store/authStore";
 import { User } from "lucide-react";
 import Cookies from "js-cookie";
+import { Link } from "react-router-dom";
 
 const navigation = [
   { name: "Dashboard", href: "#", current: true },
@@ -56,11 +57,13 @@ export default function DashboardPage() {
             <div className="flex h-16 items-center justify-between">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
-                  <img
-                    alt="Your Company"
-                    src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=500"
-                    className="h-8 w-8"
-                  />
+                  <Link to="/">
+                    <img
+                      alt="Your Company"
+                      src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=500"
+                      className="h-8 w-8"
+                    />
+                  </Link>
                 </div>
                 <div className="hidden md:block">
                   <div className="ml-10 flex items-baseline space-x-4">
