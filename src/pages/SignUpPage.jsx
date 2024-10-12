@@ -3,23 +3,31 @@ import { Link, useNavigate } from "react-router-dom";
 import PasswordStrengthMeter from "../components/PasswordStrengthMeter";
 import SpinnerComponent from "../components/Spinner";
 import { useAuthStore } from "../store/authStore";
+import Cookies from "js-cookie";
 
 const SignUpPage = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { signup, isLoading, error, setCookies, token } = useAuthStore();
+  const { signup, isLoading, error } = useAuthStore();
   const navigate = useNavigate();
   const handleSignUp = async (e) => {
     e.preventDefault();
     try {
       await signup(name, email, password);
+      // const token = await signup(name, email, password);
+      // setCookies(token);
       navigate("/verify-email");
-      setCookies(token);
     } catch (e) {
       console.log(e);
     }
   };
+
+  // const setCookies = (token) => {
+  //   Cookies.set("token", token, {
+  //     expires: 7,
+  //   });
+  // };
   return (
     <>
       {/*

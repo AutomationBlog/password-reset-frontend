@@ -18,35 +18,22 @@ export const useAuthStore = create((set) => ({
   isLoading: false,
   isCheckingAuth: true,
   message: null,
-  token: null,
-  setCookies: (token) => {
-    Cookies.set("token", token, {
-      expires: 7,
-    });
-  },
-  getCookies: () => {
-    return Cookies.get("token");
-  },
-  clearCookies: () => {
-    Cookies.remove("token");
-  },
   signup: async (name, email, password) => {
-    set({ isLoading: true, error: null });
+    set({ isLoading: true, error: null, token: null });
     try {
       const response = await axios.post("/api/auth/signup", {
         name,
         email,
         password,
       });
-      console.log(response.data);
       if (JSON.parse(response.data.success)) {
         set({
           user: response.data.user,
-          token: response.data.token,
           isAuthenticated: true,
           isLoading: false,
         });
       }
+      return response.data.token;
     } catch (error) {
       set({
         isLoading: false,
@@ -64,13 +51,13 @@ export const useAuthStore = create((set) => ({
       });
       if (JSON.parse(response.data.success)) {
         set({
-          token: response.data.token,
           isAuthenticated: true,
           user: response.data.user,
           error: null,
           isLoading: false,
         });
       }
+      return response.data.token;
     } catch (error) {
       set({
         error: error.response?.data?.msg || "Error logging in",

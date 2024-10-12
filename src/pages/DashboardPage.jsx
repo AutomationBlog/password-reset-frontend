@@ -10,6 +10,7 @@ import {
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useAuthStore } from "../store/authStore";
 import { User } from "lucide-react";
+import Cookies from "js-cookie";
 
 const navigation = [
   { name: "Dashboard", href: "#", current: true },
@@ -29,11 +30,15 @@ function classNames(...classes) {
 }
 
 export default function DashboardPage() {
-  const { user, logout, clearCookies } = useAuthStore();
+  const { user, logout } = useAuthStore();
 
   const handleLogout = () => {
     logout();
     clearCookies();
+  };
+
+  const clearCookies = () => {
+    Cookies.remove("token");
   };
   return (
     <>

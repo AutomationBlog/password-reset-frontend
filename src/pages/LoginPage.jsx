@@ -2,18 +2,26 @@ import { Link, useNavigate } from "react-router-dom";
 import SpinnerComponent from "../components/Spinner";
 import { useState } from "react";
 import { useAuthStore } from "../store/authStore";
+import Cookies from "js-cookie";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login, isLoading, error, setCookies, token } = useAuthStore();
+  const { login, isLoading, error } = useAuthStore();
   const navigate = useNavigate();
   const handleLogin = async (e) => {
     e.preventDefault();
     await login(email, password);
-    setCookies(token);
+    // const token = await login(email, password);
+    // setCookies(token);
     navigate("/dashboard");
   };
+
+  // const setCookies = (token) => {
+  //   Cookies.set("token", token, {
+  //     expires: 7,
+  //   });
+  // };
 
   return (
     <>
